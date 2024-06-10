@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CastRaycast : MonoBehaviour
 {
+    public MeshFilter meshFilter;
+
     public int resolution = 20;
     public float epsilon = 0.001f;
     public SphereMove[] sphereMoves;
@@ -90,8 +92,6 @@ public class CastRaycast : MonoBehaviour
         caputeredPositions.Add(temp);
     }
 
-    Mesh mesh;
-
     void CreateMesh()
     {
         Vertex[] vertices = caputeredPositions[0];
@@ -99,7 +99,7 @@ public class CastRaycast : MonoBehaviour
         Vector3[] meshVertices = new Vector3[vertices.Length];
         int size = resolution*2;
 
-        mesh = new Mesh();
+        Mesh mesh = new Mesh();
         mesh.Clear();
 
         for (int i = 0; i < vertices.Length; i++)
@@ -146,7 +146,7 @@ public class CastRaycast : MonoBehaviour
         mesh.vertices = meshVertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
-        GetComponent<MeshFilter>().mesh = mesh;
+        meshFilter.mesh = mesh;
     }
 
     
@@ -178,7 +178,7 @@ public class CastRaycast : MonoBehaviour
             }
         }
 
-        mesh.vertices = currentPosition;
+        meshFilter.mesh.vertices = currentPosition;
         currentTime += Time.deltaTime;
     }
 }
